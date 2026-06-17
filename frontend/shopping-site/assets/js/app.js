@@ -30,6 +30,7 @@ export function setActiveNavByPath() {
   const keyMap = [
     { key: "home", includes: "/index.html" },
     { key: "catalog", includes: "/catalog.html" },
+    { key: "outfits", includes: "/outfits.html" },
     { key: "cart", includes: "/cart.html" },
     { key: "wish", includes: "/wish.html" },
     { key: "orders", includes: "/orders.html" },

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>穿搭晒单 · Aurora Shop</title>
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+  </head>
+  <body data-page="outfits">
+    <div data-shell="header"></div>
+
+    <main class="container">
+      <div class="page-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+          <div>
+            <h1>穿搭晒单</h1>
+            <p>看看真实买家的穿搭效果，点击图片跳转购买同款</p>
+          </div>
+          <button class="btn primary" type="button" data-role="upload-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 5v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            发布晒单
+          </button>
+        </div>
+      </div>
+
+      <section class="card pad">
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:space-between; margin-bottom:16px;">
+          <div class="tabs" data-role="filter-tabs" aria-label="晒单筛选">
+            <button class="tab active" data-filter="all">全部</button>
+            <button class="tab" data-filter="featured">精选</button>
+            <button class="tab" data-filter="daily">日常</button>
+            <button class="tab" data-filter="work">通勤</button>
+            <button class="tab" data-filter="date">约会</button>
+            <button class="tab" data-filter="sport">运动</button>
+            <button class="tab" data-filter="travel">旅行</button>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="chip">排序</span>
+            <select data-role="sorter" style="padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:var(--panel);">
+              <option value="latest">最新发布</option>
+              <option value="popular">最受欢迎</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="outfit-masonry" data-role="outfit-grid"></div>
+        <div class="hint" style="margin-top:16px; text-align:center;" data-role="empty-hint"></div>
+      </section>
+    </main>
+
+    <div class="modal" data-role="upload-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-role="modal-backdrop"></div>
+      <div class="modal-content glass" role="dialog" aria-modal="true" aria-labelledby="upload-title">
+        <div class="modal-header">
+          <h3 id="upload-title">发布穿搭晒单</h3>
+          <button class="btn" type="button" data-role="modal-close" aria-label="关闭">✕</button>
+        </div>
+        <div class="modal-body">
+          <form data-role="upload-form">
+            <div class="form-group">
+              <label>上传照片 *</label>
+              <div class="upload-area" data-role="upload-area">
+                <input type="file" accept="image/*" data-role="file-input" hidden />
+                <div class="upload-placeholder" data-role="upload-placeholder">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 5v14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                    <path d="M5 12h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                  </svg>
+                  <p>点击或拖拽上传穿搭照片</p>
+                  <small>支持 JPG、PNG 格式</small>
+                </div>
+                <img class="upload-preview" data-role="upload-preview" alt="预览" hidden />
+              </div>
+              <div class="privacy-warning" data-role="privacy-warning" hidden>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 9v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                </svg>
+                <span>检测到照片含有人脸，公开发布请注意隐私风险</span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>身高 (cm)</label>
+                <input type="number" name="height" placeholder="例如：165" min="100" max="250" />
+              </div>
+              <div class="form-group">
+                <label>尺码</label>
+                <select name="size" data-role="size-select">
+                  <option value="">请选择</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>穿搭场景</label>
+              <div class="scene-chips" data-role="scene-chips"></div>
+              <input type="hidden" name="scene" data-role="scene-input" />
+            </div>
+
+            <div class="form-group">
+              <label>关联购买商品 *</label>
+              <select name="productId" data-role="product-select">
+                <option value="">请选择购买的商品</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>穿搭心得</label>
+              <textarea name="content" rows="3" placeholder="分享你的穿搭体验、尺码建议等..."></textarea>
+            </div>
+
+            <div class="modal-footer">
+              <button class="btn" type="button" data-role="modal-cancel">取消</button>
+              <button class="btn primary" type="submit">发布晒单</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" data-role="detail-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-role="detail-backdrop"></div>
+      <div class="modal-content modal-content--wide glass" role="dialog" aria-modal="true">
+        <div class="modal-header">
+          <h3 data-role="detail-title">晒单详情</h3>
+          <button class="btn" type="button" data-role="detail-close" aria-label="关闭">✕</button>
+        </div>
+        <div class="modal-body" data-role="detail-body"></div>
+      </div>
+    </div>
+
+    <div data-shell="footer"></div>
+    <script type="module" src="../assets/js/bootstrap.js"></script>
+  </body>
+</html>

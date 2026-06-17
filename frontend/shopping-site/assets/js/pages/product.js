@@ -7,7 +7,8 @@
 import { productById } from "../product-data.js";
 import { addToCart } from "../cart-store.js";
 import { syncBadges, toast } from "../app.js";
-import { productImageUrl } from "../ui-products.js";
+import { productImageUrl, formatPrice } from "../ui-products.js";
+import { getOutfits, initSampleOutfits } from "../outfit-store.js";
 
 function getId() {
   const sp = new URLSearchParams(window.location.search);
@@ -116,6 +117,7 @@ function fillPanels(p) {
   const spec = document.querySelector("[data-role='spec']");
   const reviews = document.querySelector("[data-role='reviews']");
   const desc = document.querySelector("[data-role='desc-full']");
+  const outfits = document.querySelector("[data-role='product-outfits']");
 
   if (desc) {
     desc.innerHTML = `
@@ -186,6 +188,57 @@ function fillPanels(p) {
           )
           .join("")}
       </div>
+    `;
+  }
+
+  if (outfits) {
+    initSampleOutfits();
+    const productOutfits = getOutfits({ productId: p.id });
+    
+    outfits.innerHTML = `
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+        <div>
+          <div class="panel-title" style="margin-bottom:4px;">买家真实穿搭</div>
+          <div class="muted" style="font-size:13px;">共 ${productOutfits.length} 条晒单</div>
+        </div>
+        <a class="btn primary" href="./outfits.html?productId=${encodeURIComponent(p.id)}">查看全部晒单</a>
+      </div>
+      ${productOutfits.length > 0 ? `
+        <div class="outfit-masonry outfit-masonry--small">
+          ${productOutfits.slice(0, 4).map((o) => `
+            <article class="outfit-card" style="position:static; width:auto; left:auto; top:auto;">
+              <div class="outfit-image-wrap" onclick="window.location.href='./outfits.html'">
+                <img class="outfit-image" src="${escapeHTML(o.image)}" alt="穿搭晒单" loading="lazy" />
+                <div class="outfit-badges">
+                  ${o.featured ? `<span class="outfit-badge outfit-badge--featured">✨ 精选</span>` : ""}
+                  ${o.hasFace ? `<span class="outfit-badge outfit-badge--warn">⚠ 隐私提示</span>` : ""}
+                </div>
+              </div>
+              <div class="outfit-body">
+                <div class="outfit-user">
+                  <div class="outfit-avatar">${escapeHTML(o.userName.charAt(0))}</div>
+                  <div>
+                    <div class="outfit-username">${escapeHTML(o.userName)}</div>
+                    <div class="outfit-time">${new Date(o.createdAt).toLocaleDateString()}</div>
+                  </div>
+                </div>
+                <div class="outfit-meta">
+                  ${o.height ? `<span class="chip chip--sm">${o.height}cm</span>` : ""}
+                  ${o.size ? `<span class="chip chip--sm">${o.size}</span>` : ""}
+                  ${o.scene ? `<span class="chip chip--sm">${escapeHTML(o.scene)}</span>` : ""}
+                </div>
+                ${o.content ? `<p class="outfit-content">${escapeHTML(o.content)}</p>` : ""}
+              </div>
+            </article>
+          `).join("")}
+        </div>
+      ` : `
+        <div class="notice" style="text-align:center; padding:40px 20px;">
+          <strong>暂无晒单</strong>
+          <p style="margin-top:8px; color:var(--muted);">成为第一个晒单的人吧～</p>
+          <a class="btn primary" style="margin-top:12px;" href="./outfits.html">去发布晒单</a>
+        </div>
+      `}
     `;
   }
 }

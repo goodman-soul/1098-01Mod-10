@@ -55,6 +55,7 @@ export function headerTemplate({ activeKey = "" } = {}) {
   const nav = [
     { key: "home", label: "首页", href: `${base}index.html` },
     { key: "catalog", label: "分类/商品", href: `${base}pages/catalog.html` },
+    { key: "outfits", label: "穿搭晒单", href: `${base}pages/outfits.html` },
     { key: "cart", label: "购物车", href: `${base}pages/cart.html` },
     { key: "orders", label: "订单", href: `${base}pages/orders.html` },
     { key: "media", label: "媒体馆", href: `${base}pages/media.html` },
